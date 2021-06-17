@@ -1,0 +1,69 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.result {
+    border: 1px solid black;
+    display: flex;
+    justify-content: right;
+    width: 208px;
+
+
+}
+
+.container {
+    background-color: aqua;
+    display: flex;
+
+}
+
+
+
+.num {
+    border: 1px solid black;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.operators {
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+.number-inputs {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* border: 3px solid green; */
+
+}
+
+.wrap {
+    display: flex;
+
+}
+
+
+.input {
+    height: 50px;
+    width: 50px;
+};
+
+
+
+
+
+
+
+
+
+/* .operators {
+    height: calc(25% - 1px);
+    width: calc(25% - 1px);
+} */
