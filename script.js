@@ -17,6 +17,7 @@ let num1 = 0;
 let num2 = 0;
 
 
+// operate(operatorUsed, num1, num2);
 
 
 // function updateDisplay(buttonPressed) {
@@ -37,12 +38,17 @@ function createNumber(pressed) {
 
   let keyPressed = pressed.target.innerText;
 
-  console.log(keyPressed !== "*");
+  // console.log(keyPressed !== "*");
+  console.log(keyPressed);
 
-  contentArray.push(keyPressed);
+  if (keyPressed !== "*" && keyPressed !== "/" && keyPressed !== "-" && keyPressed !== "+" && keyPressed !== "=") {
+    contentArray.push(keyPressed);
+
+  }
+
   
   
-  let contentString = contentArray.join("");
+  let contentString = Number(contentArray.join(""));
   
   resultDisplay.innerText = contentString;
   return contentString
@@ -50,26 +56,26 @@ function createNumber(pressed) {
 }
 
 
-function createOperator(object) {
-  let operatorChosen = object.target.innerText;
-  if (operatorChosen == "+") {
-    return "add"
-  };
+// function createOperator(object) {
+//   let operatorChosen = object.target.innerText;
+//   if (operatorChosen == "+") {
+//     return "add"
+//   };
 
-  if (operatorChosen == "-") {
-    return "substract"
-  };
+//   if (operatorChosen == "-") {
+//     return "substract"
+//   };
 
-  if (operatorChosen == "/") {
-    return "division"
-  };
+//   if (operatorChosen == "/") {
+//     return "division"
+//   };
 
-  if (operatorChosen == "*") {
-    return "multiply"
-  };
+//   if (operatorChosen == "*") {
+//     return "multiply"
+//   };
 
 
-};
+// };
  
 function input(objectPressed) {
 
@@ -82,35 +88,80 @@ function input(objectPressed) {
   };
 
 
-  if (key == "+" || key == "-" || key == "*" || key == "/") {
+  switch (key) {
+    case "+":
+      operatorUsed = "add"
+      startSecondNumber()      
+      break;
+
+    case "-":
+      operatorUsed = "substract"
+      startSecondNumber()      
+      break;
+    
+
+    case "/":
+      operatorUsed = "divide"
+      startSecondNumber()
+      break;
+
+    case "*":
+      operatorUsed = "multiply"
+      startSecondNumber()
+      break;
+    
+    case "=":
+      let answer = operate(operatorUsed, num1, num2);
+      resultDisplay.innerText = answer;
+      num1 = answer;
+      break;
+
+
+    default: 
+      break;
+  }
+
+  function startSecondNumber() {
     contentArray = [];
     firstNumberDone = true;
     resultDisplay.innerText = key;
+  }
+
+
+
+  // if (key == "+" || key == "-" || key == "*" || key == "/") {
+  //   contentArray = [];
+  //   firstNumberDone = true;
+  //   resultDisplay.innerText = key;
 
     
-  }
+  // }
 
-  if (key == "+") {
-    operatorUsed = "add"
-  }
+  // if (key == "+") {
+  //   operatorUsed = "add"
+  // }
 
-  if (key == "-") {
-    operatorUsed = "substract"
-  }
+  // if (key == "-") {
+  //   operatorUsed = "substract"
+  // }
 
-  if (key == "/") {
-    operatorUsed = "division"
-  }
+  // if (key == "/") {
+  //   operatorUsed = "divide"
+  // }
 
-  if (key == "*") {
-    operatorUsed = "multiply"
-  }
+  // if (key == "*") {
+  //   operatorUsed = "multiply"
+  // }
 
 
-  if (key == "=") {
-    // contentArray = [];
-    // firstNumberDone = true;
-  }
+  // if (key == "=") {
+
+  //   let answer = operate(operatorUsed, num1, num2);
+  //   resultDisplay.innerText = answer;
+  //   num1 = answer;
+
+
+  // }
 
 
   // let firstNumber = 0;
@@ -122,36 +173,32 @@ function input(objectPressed) {
 
 
 }
- 
- 
- 
 
- 
- 
- 
- 
- 
- 
- 
- 
-function add(a, b) {
-    return a + b;
-};
-
-function substract(a, b) {
-    return a - b;
-};
-
-
-function multiply(a, b) {
-    return a * b;
-};
-
-function divide(a, b) {
-    return a / b;
-};
 
 
 function operate(operator, firstNumber, secondNumber) {
-    return operator(firstNumber, secondNumber)
+    switch (operator) {
+        case "add":
+            return firstNumber + secondNumber
+            
+            break;
+        
+        case "substract":
+            return firstNumber - secondNumber;
+            break;
+        
+        case "multiply":
+            return firstNumber * secondNumber;
+            break;
+
+
+        case "divide":
+            return firstNumber / secondNumber;
+            break;
+
+
+        default:
+            console.log("Something went wrong in the operate function");
+            break;
+    }
 };
