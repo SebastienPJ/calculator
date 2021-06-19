@@ -12,8 +12,10 @@ buttons.forEach(button => button.addEventListener("click", input));
 let contentArray = [];
 let firstNumberDone = false;
 let operatorUsed = "";
+let operatorCount = 0;
 let num1 = 0;
 let num2 = 0;
+let answer = 0;
 
 
 function changeArrayToNumber(){
@@ -41,8 +43,18 @@ function input(objectPressed) {
   function startSecondNumber() {
     contentArray = [];
     firstNumberDone = true;
-    resultDisplay.innerText = key;
+    // resultDisplay.innerText = key;
   };
+
+  function updateNum1(){
+    answer = operate(operatorUsed, num1, num2);
+    operatorCount += 1
+    if (operatorCount > 1) {
+      num1 = answer
+      resultDisplay.innerText = num1
+    }
+
+  }
 
 
   let key = objectPressed.target.innerText;
@@ -62,28 +74,37 @@ function input(objectPressed) {
 
   switch (key) {
     case "+":
+      updateNum1();  
       operatorUsed = "add"
-      startSecondNumber()      
+      startSecondNumber();
+          
       break;
 
     case "-":
+      updateNum1(); 
       operatorUsed = "substract"
-      startSecondNumber()      
+      startSecondNumber();
+           
       break;
     
 
     case "/":
+      updateNum1();
       operatorUsed = "divide"
       startSecondNumber()
+       
       break;
 
     case "*":
+      updateNum1(); 
       operatorUsed = "multiply"
       startSecondNumber()
+      
+
       break;
     
     case "=":
-      let answer = operate(operatorUsed, num1, num2);
+      answer = operate(operatorUsed, num1, num2);
       resultDisplay.innerText = answer;
       num1 = answer;
       break;
@@ -94,6 +115,7 @@ function input(objectPressed) {
       firstNumberDone = false;
       num1 = 0;
       num2 = 0;
+      operatorCount = 0;
 
       break;
 
