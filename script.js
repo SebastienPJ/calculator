@@ -9,7 +9,6 @@ buttons.forEach(button => button.addEventListener("click", input));
 
 
 
-// let contentDisplayed = "";
 let contentArray = [];
 let firstNumberDone = false;
 let operatorUsed = "";
@@ -17,74 +16,47 @@ let num1 = 0;
 let num2 = 0;
 
 
-// operate(operatorUsed, num1, num2);
-
-
-// function updateDisplay(buttonPressed) {
-//     console.log(contentString);
-
-    
-
-//     contentArray.push(buttonPressed.target.innerText);
-//     console.log(contentArray);
-    
-//     resultDisplay.innerText = buttonPressed.target.innerText;
-//     // console.log(buttonPressed);
-//     // console.log(buttonPressed.target.innerText);
-
-// }
-
-function createNumber(pressed) {
-
-  let keyPressed = pressed.target.innerText;
-
-  // console.log(keyPressed !== "*");
-  console.log(keyPressed);
-
-  if (keyPressed !== "*" && keyPressed !== "/" && keyPressed !== "-" && keyPressed !== "+" && keyPressed !== "=") {
-    contentArray.push(keyPressed);
-
-  }
-
+function changeArrayToNumber(){
+  let contentAsNumber = Number(contentArray.join(""));
   
-  
-  let contentString = Number(contentArray.join(""));
-  
-  resultDisplay.innerText = contentString;
-  return contentString
+  return contentAsNumber
 
 }
 
+function createNumber(keyPressed, objectClassArray) {
 
-// function createOperator(object) {
-//   let operatorChosen = object.target.innerText;
-//   if (operatorChosen == "+") {
-//     return "add"
-//   };
-
-//   if (operatorChosen == "-") {
-//     return "substract"
-//   };
-
-//   if (operatorChosen == "/") {
-//     return "division"
-//   };
-
-//   if (operatorChosen == "*") {
-//     return "multiply"
-//   };
+  console.log(keyPressed);
 
 
-// };
+  if (objectClassArray.contains("number")) {
+    contentArray.push(keyPressed);  
+  };
+
+  return changeArrayToNumber();
+}
+
  
 function input(objectPressed) {
+  /*****Clears display, begins recording second number ****/
+  function startSecondNumber() {
+    contentArray = [];
+    firstNumberDone = true;
+    resultDisplay.innerText = key;
+  };
+
 
   let key = objectPressed.target.innerText;
+  let objectClasses = objectPressed.target.classList
+
 
   if (firstNumberDone) {
-    num2 = createNumber(objectPressed);
+
+    num2 = createNumber(key, objectClasses);
+    resultDisplay.innerText = num2;
+
   } else {
-    num1 = createNumber(objectPressed);
+    num1 = createNumber(key, objectClasses);
+    resultDisplay.innerText = num1;
   };
 
 
@@ -115,65 +87,41 @@ function input(objectPressed) {
       resultDisplay.innerText = answer;
       num1 = answer;
       break;
+    
+    case "Clear":
+      resultDisplay.innerText = 0;
+      contentArray = [];
+      firstNumberDone = false;
+      num1 = 0;
+      num2 = 0;
 
+      break;
+
+
+    case "Back":
+      deleteLastNumber();      
+      break;
 
     default: 
       break;
   }
+};
 
-  function startSecondNumber() {
-    contentArray = [];
-    firstNumberDone = true;
-    resultDisplay.innerText = key;
+
+
+/**** Deletes last number in content array,
+updates num1 or num2 and display accordingly ****/
+function deleteLastNumber() {
+  contentArray.pop();
+
+  if (firstNumberDone) {
+    num2 = changeArrayToNumber();
+    resultDisplay.innerText = num2;
+  } else {
+    num1 = changeArrayToNumber();
+    resultDisplay.innerText = num1;
   }
-
-
-
-  // if (key == "+" || key == "-" || key == "*" || key == "/") {
-  //   contentArray = [];
-  //   firstNumberDone = true;
-  //   resultDisplay.innerText = key;
-
-    
-  // }
-
-  // if (key == "+") {
-  //   operatorUsed = "add"
-  // }
-
-  // if (key == "-") {
-  //   operatorUsed = "substract"
-  // }
-
-  // if (key == "/") {
-  //   operatorUsed = "divide"
-  // }
-
-  // if (key == "*") {
-  //   operatorUsed = "multiply"
-  // }
-
-
-  // if (key == "=") {
-
-  //   let answer = operate(operatorUsed, num1, num2);
-  //   resultDisplay.innerText = answer;
-  //   num1 = answer;
-
-
-  // }
-
-
-  // let firstNumber = 0;
-  // let secondNumber = 0;
-
-    
-  // console.log(contentArray);
-  // console.log(contentString);
-
-
 }
-
 
 
 function operate(operator, firstNumber, secondNumber) {
