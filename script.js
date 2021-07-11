@@ -1,174 +1,165 @@
 const buttons = document.querySelectorAll(".button");
 const resultDisplay = document.querySelector(".result");
 
-
 console.log(buttons);
 
-buttons.forEach(button => button.addEventListener("click", input));
-
-
-
-
-let contentArray = [];
+// let contentArray = [];
 let firstNumberDone = false;
 let operatorUsed = "";
 let operatorCount = 0;
-let num1 = 0;
-let num2 = 0;
+let num1 = "";
+let num2 = "";
 let answer = 0;
+let periodUsed = false;
+
+buttons.forEach((button) => button.addEventListener("click", calculator));
+
+document.addEventListener("keydown", keyboard);
 
 
-function changeArrayToNumber(){
-  let contentAsNumber = Number(contentArray.join(""));
+
+function calculator(objectPressed) {
+  let keyValue = objectPressed.target.innerText;
+  let objectClasses = objectPressed.target.classList;
+
   
-  return contentAsNumber
-
-}
-
-function createNumber(keyPressed, objectClassArray) {
-
-  console.log(keyPressed);
-
-
-  if (objectClassArray.contains("number")) {
-    contentArray.push(keyPressed);  
-  };
-
-  return changeArrayToNumber();
-}
-
- 
-function input(objectPressed) {
-  /*****Clears display, begins recording second number ****/
-  function startSecondNumber() {
-    contentArray = [];
-    firstNumberDone = true;
-    // resultDisplay.innerText = key;
-  };
-
-  function updateNum1(){
-    answer = operate(operatorUsed, num1, num2);
-    operatorCount += 1
-    if (operatorCount > 1) {
-      num1 = answer
-      resultDisplay.innerText = num1
+  if(firstNumberDone) {
+    if (objectClasses.contains("number") || (objectClasses.contains("period") && periodUsed == false)){
+      num2 += keyValue;
+      updateDisplay(num2);
     }
-
+  } else {
+    if (objectClasses.contains("number") || (objectClasses.contains("period") && periodUsed == false)){
+      num1 += keyValue;
+      updateDisplay(num1);
+    }
   }
 
 
-  let key = objectPressed.target.innerText;
-  let objectClasses = objectPressed.target.classList
+  switch (keyValue) {
+    case ".":
+      periodUsed = true;
+    break;
 
-
-  if (firstNumberDone) {
-
-    num2 = createNumber(key, objectClasses);
-    resultDisplay.innerText = num2;
-
-  } else {
-    num1 = createNumber(key, objectClasses);
-    resultDisplay.innerText = num1;
-  };
-
-
-  switch (key) {
     case "+":
-      updateNum1();  
-      operatorUsed = "add"
+      updateOperatorCount();
+      operatorUsed = "add";
       startSecondNumber();
-          
-      break;
+    break;
 
     case "-":
-      updateNum1(); 
-      operatorUsed = "substract"
+      updateOperatorCount()
+      operatorUsed = "substract";
       startSecondNumber();
-           
-      break;
-    
+    break;
 
     case "/":
-      updateNum1();
-      operatorUsed = "divide"
-      startSecondNumber()
-       
-      break;
+      updateOperatorCount()
+      operatorUsed = "divide";
+      startSecondNumber();
+    break;
 
     case "*":
-      updateNum1(); 
-      operatorUsed = "multiply"
-      startSecondNumber()
-      
+      updateOperatorCount()
+      operatorUsed = "multiply";
+      startSecondNumber();
+    break;
 
-      break;
-    
     case "=":
-      answer = operate(operatorUsed, num1, num2);
-      resultDisplay.innerText = answer;
-      num1 = answer;
-      break;
-    
+      getAnswer(operatorUsed, Number(num1), Number(num2));
+      updateDisplay(answer);
+      // num1 = answer;
+      // // num2 = 0;
+
+    break;
+
     case "Clear":
-      resultDisplay.innerText = 0;
-      contentArray = [];
+      updateDisplay(0);
       firstNumberDone = false;
-      num1 = 0;
-      num2 = 0;
+      periodUsed = false;
+      num1 = "";
+      num2 = "";
+      answer = 0;
+      operatorUsed = "";
       operatorCount = 0;
-
-      break;
-
+    break;
 
     case "Back":
-      deleteLastNumber();      
-      break;
+      firstNumberDone ? num2 = deleteLastCharacter(num2) : num1 = deleteLastCharacter(num1);
+    break;
 
-    default: 
-      break;
+    default:
+    break;
   }
-};
 
 
+  function updateOperatorCount() {
+    operatorCount += 1
 
-/**** Deletes last number in content array,
-updates num1 or num2 and display accordingly ****/
-function deleteLastNumber() {
-  contentArray.pop();
+    if (operatorCount > 1) {
+      getAnswer(operatorUsed, Number(num1), Number(num2));
+      num1 = answer;    
+      num2 = "";    
+      updateDisplay(num1);
+    };
 
-  if (firstNumberDone) {
-    num2 = changeArrayToNumber();
-    resultDisplay.innerText = num2;
-  } else {
-    num1 = changeArrayToNumber();
-    resultDisplay.innerText = num1;
+  }
+
+  function updateDisplay(value) {
+    resultDisplay.innerText = value;
+  }
+
+
+  function getAnswer(sign, firstNum, secondNum) {
+    answer = operate(sign, firstNum, secondNum);
+  }
+
+  function startSecondNumber() {
+    firstNumberDone = true;
+    periodUsed = false;
+  }
+
+
+  function deleteLastCharacter(number) {
+    let newNumber = number.slice(0, number.length - 1);
+    updateDisplay(newNumber);
+    return newNumber;
+  }
+
+
+  function operate(operator, firstNumber, secondNumber) {
+    switch (operator) {
+      case "add":      
+        return firstNumber + secondNumber;
+      break;
+
+      case "substract":
+        return firstNumber - secondNumber;
+      break;
+
+      case "multiply":
+        return firstNumber * secondNumber;
+      break;
+
+      case "divide":
+        return firstNumber / secondNumber;
+      break;
+
+      default:
+        console.log("Something went wrong in the operate function");
+      break;
+    }
   }
 }
 
 
-function operate(operator, firstNumber, secondNumber) {
-    switch (operator) {
-        case "add":
-            return firstNumber + secondNumber
-            
-            break;
-        
-        case "substract":
-            return firstNumber - secondNumber;
-            break;
-        
-        case "multiply":
-            return firstNumber * secondNumber;
-            break;
+
+/******* KEYBOARD EVENTS ********/
+
+function keyboard(buttonPressed) {
+
+  console.log(buttonPressed.key);
 
 
-        case "divide":
-            return firstNumber / secondNumber;
-            break;
 
-
-        default:
-            console.log("Something went wrong in the operate function");
-            break;
-    }
-};
+}
