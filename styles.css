@@ -5,6 +5,18 @@ body {
   text-align: center;
 }
 
+  
+header {
+  font-size: 2em;
+  margin: 30px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 10px;
+
+}
+  
 .calculator {
   display: inline-block;
   border: 5px solid red;
@@ -25,7 +37,7 @@ body {
   
 }
 
-.num {
+.button {
   border: 1px solid black;
   height: 50px;
   width: 50px;
@@ -52,29 +64,13 @@ body {
   display: flex;
 }
 
-.input {
-  height: 50px;
-  width: 50px;
-}
 
-.long {
+.long-button {
   flex-basis: 112px;
 }
 
-
-footer {
-
-text-align: center;
-margin-top: 10px;
-}
-
-
-header {
-  margin: 30px;
-}
-
 .pressed {
-
+  border: 1px solid red;
   box-shadow: 0 3px 4px 0 #DBEDF3;
   opacity: 0.5;
 

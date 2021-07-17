@@ -32,19 +32,20 @@ function calculator(objectPressed) {
   charactersHistory.push(keyValue);
   console.log(charactersHistory);
 
-
-  buttonAnimation(objectPressed)
+  
   
 
   if (firstNumberDone) {
 
     if (objectClasses.contains("number") || (objectClasses.contains("period") && periodUsed == false)) {
+      buttonAnimation("_" + keyValue)
       num2 += keyValue;
       updateDisplay(num2);
     }
 
   } else {
     if (objectClasses.contains("number") || (objectClasses.contains("period") && periodUsed == false)) {
+      buttonAnimation("_" + keyValue)
       num1 += keyValue;
       updateDisplay(num1);
     }
@@ -52,22 +53,26 @@ function calculator(objectPressed) {
 
   switch (keyValue) {
     case ".":
+      buttonAnimation("period")
       periodUsed = true;
     break;
 
     case "+":
+      buttonAnimation("add")
       updateOperatorCount();
       operatorUsed = "add";
       startSecondNumber();
     break;
 
     case "-":
+      buttonAnimation("substract")
       updateOperatorCount();
       operatorUsed = "substract";
       startSecondNumber();
     break;
 
-    case "/":      
+    case "/":
+      buttonAnimation("divide")      
       console.log(num1);
       console.log(Number(num2));
       updateOperatorCount();
@@ -76,12 +81,14 @@ function calculator(objectPressed) {
     break;
 
     case "*":
+      buttonAnimation("multiply")
       updateOperatorCount();
       operatorUsed = "multiply";
       startSecondNumber();
     break;
 
     case "=":
+      buttonAnimation("equal")
       getAnswer(operatorUsed, Number(num1), Number(num2));
       updateDisplay(answer);
       // num1 = answer;
@@ -89,6 +96,7 @@ function calculator(objectPressed) {
     break;
 
     case "Clear":
+      buttonAnimation("clear");
       updateDisplay(0);
       firstNumberDone = false;
       periodUsed = false;
@@ -101,6 +109,7 @@ function calculator(objectPressed) {
     break;
 
     case "Delete":
+      buttonAnimation("delete")
       firstNumberDone ? (num2 = deleteLastCharacter(num2)) : (num1 = deleteLastCharacter(num1));
     break;
 
@@ -113,7 +122,7 @@ function calculator(objectPressed) {
 
 /*********************** GLOBAL FUNCTIONS ************************/
 function buttonAnimation(currentKey){
- let activeButton = currentKey.target; 
+  let activeButton = document.querySelector("." + currentKey);
   activeButton.classList.add("pressed");
   setTimeout(function(){
       activeButton.classList.remove("pressed");
@@ -211,6 +220,7 @@ function keyboard(buttonPressed) {
   console.log(buttonPressed);
 
   charactersHistory.push(buttonPressed.key);
+  buttonAnimation(buttonPressed);
   console.log(charactersHistory);
 
   switch (buttonPressed.key) {
