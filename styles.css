@@ -1,24 +1,28 @@
-html,
 body {
   margin: 0;
   padding: 0;
+  background-color: beige;
+  text-align: center;
 }
 
 .calculator {
-  border: 2px solid red;
+  display: inline-block;
+  border: 5px solid red;
+  align-content: center;
 }
 
 .result {
-  border: 1px solid black;
   display: flex;
   justify-content: right;
-  width: 208px;
+  padding: 10px;
+  height: 50px;
+  align-items: center;
 }
 
 .container {
-  border: 2px solid green;
-  background-color: aqua;
+  border-top: 5px solid green;
   display: flex;
+  
 }
 
 .num {
@@ -27,18 +31,21 @@ body {
   width: 50px;
   display: flex;
   justify-content: center;
+  background-color: aqua;
+  margin: 5px;
+  align-items: center;
+  border-radius: 10px;
 }
 
 .operators {
-  /* display: flex; */
-  /* flex-direction: column; */
+  display: flex;
+  flex-direction: column;
 }
 
 .number-inputs {
   display: flex;
   flex-direction: column;
-  /* flex-wrap: wrap; */
-  /* border: 3px solid green; */
+
 }
 
 .wrap {
@@ -50,9 +57,25 @@ body {
   width: 50px;
 }
 
-/* .operators {
+.long {
+  flex-basis: 112px;
+}
 
-height: calc(25% - 1px);
-width: calc(25% - 1px);
 
-} */
+footer {
+
+text-align: center;
+margin-top: 10px;
+}
+
+
+header {
+  margin: 30px;
+}
+
+.pressed {
+
+  box-shadow: 0 3px 4px 0 #DBEDF3;
+  opacity: 0.5;
+
+}
