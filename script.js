@@ -66,8 +66,6 @@ function calculator(objectPressed) {
 
     case "/":
       buttonAnimation("divide")      
-      console.log(num1);
-      console.log(Number(num2));
       updateOperatorCount();
       operatorUsed = "divide";
       startSecondNumber();
@@ -83,11 +81,15 @@ function calculator(objectPressed) {
     case "=":
       buttonAnimation("equal")
       getAnswer(operatorUsed, Number(num1), Number(num2));
-      if (answer == "Infinity" || answer =="-Infinity" || answer == "NaN") {
+      if (answer == "Infinity" || answer =="-Infinity" || answer== NaN) {
         resultDisplay.innerText = invalidMessage;
       } else {
         updateDisplay(answer);
       };
+      num1 = answer;
+      num2 = "";
+      operatorUsed = "";
+      operatorCount = 1;
       
     break;
 
@@ -279,6 +281,10 @@ function keyboard(buttonPressed) {
       buttonAnimation("equal")
       getAnswer(operatorUsed, Number(num1), Number(num2));
       updateDisplay(answer);
+      num1 = answer;
+      num2 = "";
+      operatorUsed = "";
+      operatorCount = 1;
 
 
     break;
