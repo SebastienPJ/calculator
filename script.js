@@ -28,14 +28,11 @@ function calculator(objectPressed) {
 
   let keyValue = objectPressed.target.innerText;
   let objectClasses = objectPressed.target.classList;
-
+  
   charactersHistory.push(keyValue);
   console.log(charactersHistory);
 
-  
-  if (answer == "Infinity") {
-    resultDisplay.innerText = "Now you know you can't do that."
-  }
+  console.log(`key: ${keyValue}`);
 
   if (firstNumberDone) {
 
@@ -133,7 +130,7 @@ function buttonAnimation(currentKey){
       activeButton.classList.remove("pressed");
   }, 200);
 
-}
+};
 
 
 function updateDisplay(value) {
@@ -226,10 +223,10 @@ function deleteLastCharacter(number) {
 /******************* KEYBOARD EVENTS *********************/
 
 function keyboard(buttonPressed) {
-  console.log(buttonPressed);
+  console.log(`keyboard key: ${buttonPressed.key}`);
 
   charactersHistory.push(buttonPressed.key);
-  buttonAnimation(buttonPressed);
+  
   console.log(charactersHistory);
 
   switch (buttonPressed.key) {
@@ -244,9 +241,11 @@ function keyboard(buttonPressed) {
     case "8":
     case "9":  
       updateNumber(buttonPressed.key);
+      buttonAnimation("_" + buttonPressed.key);
     break;
 
     case ".":
+      buttonAnimation("period");
       if (periodUsed == false) {
         updateNumber(buttonPressed.key);
       };
@@ -255,6 +254,7 @@ function keyboard(buttonPressed) {
     break;
 
     case "+":
+      buttonAnimation("add");
       updateOperatorCount();
       operatorUsed = "add";
       startSecondNumber();
@@ -262,6 +262,7 @@ function keyboard(buttonPressed) {
     break;
 
     case "-":
+      buttonAnimation("substract");
       updateOperatorCount();
       operatorUsed = "substract";
       startSecondNumber();
@@ -269,6 +270,7 @@ function keyboard(buttonPressed) {
     break;
 
     case "/":
+      buttonAnimation("divide");
       updateOperatorCount();
       operatorUsed = "divide";
       startSecondNumber();
@@ -276,6 +278,7 @@ function keyboard(buttonPressed) {
     break;
 
     case "*":
+      buttonAnimation("multiply");
       updateOperatorCount();
       operatorUsed = "multiply";
       startSecondNumber();
@@ -284,6 +287,7 @@ function keyboard(buttonPressed) {
 
     case "=":
     case "Enter":
+      buttonAnimation("equal")
       getAnswer(operatorUsed, Number(num1), Number(num2));
       updateDisplay(answer);
 
@@ -291,10 +295,12 @@ function keyboard(buttonPressed) {
     break;
 
     case "Backspace":
+      buttonAnimation("delete")
       firstNumberDone ? (num2 = deleteLastCharacter(num2)) : (num1 = deleteLastCharacter(num1));
     break;
 
     case "c":
+      buttonAnimation("clear")
       updateDisplay(0);
       firstNumberDone = false;
       periodUsed = false;
