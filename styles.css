@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: beige;
+  background-color: hsl(60, 56%, 91%);
   text-align: center;
 }
 
@@ -19,7 +19,7 @@ footer {
   
 .calculator {
   display: inline-block;
-  border: 5px solid red;
+  border: 5px solid hsl(0, 100%, 50%);
   align-content: center;
 }
 
@@ -32,7 +32,7 @@ footer {
 }
 
 .container {
-  border-top: 5px solid green;
+  border-top: 5px solid hsl(0, 100%, 50%);
   display: flex;
   
 }
@@ -43,7 +43,7 @@ footer {
   width: 50px;
   display: flex;
   justify-content: center;
-  background-color: aqua;
+  background-color: hsl(180, 100%, 44%);
   margin: 5px;
   align-items: center;
   border-radius: 10px;
@@ -71,7 +71,7 @@ footer {
 
 .pressed {
   border: 1px solid red;
-  box-shadow: 0 3px 4px 0 #DBEDF3;
+  box-shadow: 0 3px 4px 0 hsl(195, 50%, 91%);
   opacity: 0.5;
 
 }

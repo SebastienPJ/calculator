@@ -12,7 +12,7 @@ let num1 = "";
 let num2 = "";
 let answer = 0;
 let periodUsed = false;
-
+let invalidMessage = "Divide by 0 is a no no!"
 
 buttons.forEach((button) => button.addEventListener("click", calculator));
 
@@ -33,7 +33,9 @@ function calculator(objectPressed) {
   console.log(charactersHistory);
 
   
-  
+  if (answer == "Infinity") {
+    resultDisplay.innerText = "Now you know you can't do that."
+  }
 
   if (firstNumberDone) {
 
@@ -90,9 +92,12 @@ function calculator(objectPressed) {
     case "=":
       buttonAnimation("equal")
       getAnswer(operatorUsed, Number(num1), Number(num2));
-      updateDisplay(answer);
-      // num1 = answer;
-      // // num2 = 0;
+      if (answer == "Infinity") {
+        resultDisplay.innerText = invalidMessage;
+      } else {
+        updateDisplay(answer);
+      }
+      
     break;
 
     case "Clear":
@@ -157,8 +162,12 @@ function updateOperatorCount() {
         getAnswer(operatorUsed, Number(num1), Number(num2));
         num1 = answer;
         num2 = "";
-        updateDisplay(num1);
-      }
+        if (answer == "Infinity") {
+          resultDisplay.innerText = invalidMessage;
+        } else {
+          updateDisplay(num1);
+        };        
+      };
 
     break;
   
@@ -277,8 +286,7 @@ function keyboard(buttonPressed) {
     case "Enter":
       getAnswer(operatorUsed, Number(num1), Number(num2));
       updateDisplay(answer);
-      // num1 = answer;
-      // // num2 = 0;
+
 
     break;
 
