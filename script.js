@@ -2,8 +2,6 @@ const buttons = document.querySelectorAll(".button");
 const resultDisplay = document.querySelector(".result");
 
 
-console.log(buttons);
-
 let charactersHistory = [];
 let firstNumberDone = false;
 let operatorUsed = "";
@@ -24,15 +22,11 @@ document.addEventListener("keydown", keyboard);
 
 function calculator(objectPressed) {
 
-  console.log(objectPressed);
-
   let keyValue = objectPressed.target.innerText;
   let objectClasses = objectPressed.target.classList;
   
   charactersHistory.push(keyValue);
-  console.log(charactersHistory);
 
-  console.log(`key: ${keyValue}`);
 
   if (firstNumberDone) {
 
@@ -89,11 +83,11 @@ function calculator(objectPressed) {
     case "=":
       buttonAnimation("equal")
       getAnswer(operatorUsed, Number(num1), Number(num2));
-      if (answer == "Infinity") {
+      if (answer == "Infinity" || answer =="-Infinity" || answer == "NaN") {
         resultDisplay.innerText = invalidMessage;
       } else {
         updateDisplay(answer);
-      }
+      };
       
     break;
 
@@ -117,10 +111,8 @@ function calculator(objectPressed) {
 
     default:
     break;
-  }
-
-  console.log(`Operator Count: ${operatorCount}`);
-}
+  };
+};
 
 /*********************** GLOBAL FUNCTIONS ************************/
 function buttonAnimation(currentKey){
@@ -159,7 +151,7 @@ function updateOperatorCount() {
         getAnswer(operatorUsed, Number(num1), Number(num2));
         num1 = answer;
         num2 = "";
-        if (answer == "Infinity") {
+        if (answer == "Infinity" || answer =="-Infinity" || answer == "NaN") {
           resultDisplay.innerText = invalidMessage;
         } else {
           updateDisplay(num1);
@@ -223,12 +215,9 @@ function deleteLastCharacter(number) {
 /******************* KEYBOARD EVENTS *********************/
 
 function keyboard(buttonPressed) {
-  console.log(`keyboard key: ${buttonPressed.key}`);
 
   charactersHistory.push(buttonPressed.key);
   
-  console.log(charactersHistory);
-
   switch (buttonPressed.key) {
     case "0":
     case "1":
@@ -327,7 +316,5 @@ function keyboard(buttonPressed) {
       updateDisplay(num1);
     };
   };
-
-  console.log(`Operator Count: ${operatorCount}`);
 
 };
